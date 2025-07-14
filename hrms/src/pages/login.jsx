@@ -45,7 +45,7 @@ export default function Login() {
             setEmail("");
             setPassword("");
         })
-        .cathch((Error) => {
+        .catch((Error) => {
             console.log("Login Error:", Error);
             alert(Error.message);
         });
