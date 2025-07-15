@@ -6,6 +6,7 @@ import EmployeeForm from './pages/employee'
 import Dashboard from './pages/dashboard'
 import ProtectedRoute from './component/Utils/protectedRoute'
 import Unauthorize from './component/Utils/Unauthorize'
+import LogoutButton from './component/Utils/logout'
 
 
 function App() {
