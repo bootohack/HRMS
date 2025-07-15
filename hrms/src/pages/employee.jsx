@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Button from "../component/employee/button";
-import SearchSelect from "../component/Employee/SearchSelect";
+import SearchSelect from "../component/employee/SearchSelect";
 import EmployeeCard from "../component/employee/employeeCard";
-import EmployeeForm from "../component/Employee/employeeform";
+import EmployeeForm from "../component/employee/employeeform";
 import axios from "axios";
-
-
 
 export default function Employee() {
   const [modelForm, setModelForm] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [editEmployee, setEditEmployee] = useState(null);
-  const  fetchEmployees = async () => {
+
+  const fetchEmployees = async () => {
     const token = localStorage.getItem("token");
-    try{const res = await axios.get("http://localhost:5000/employees", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setEmployees(res.data);
-    }catch (error) {
+    try {
+      const res = await axios.get("http://localhost:5000/employees", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setEmployees(res.data);
+    } catch (error) {
       console.error("Error fetching employees:", error);
-    }};
-    useEffect(() => {
+    }
+  };
+
+  useEffect(() => {
     fetchEmployees();
-    }, []) ;
-    const handleDelete = async (id) => {
-      const confirDelete = window.confirm("Do you want to delete the emplouyee?");
-      if (!confirDelete) {
-        return;
-      }
-      const token = localStorage.getItem("token");
-      try {
+  }, []);
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Do you want to delete the employee?");
+    if (!confirmDelete) return;
+
+    const token = localStorage.getItem("token");
+    try {
       await axios.delete(`http://localhost:5000/employees/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -40,10 +42,11 @@ export default function Employee() {
       });
       setEmployees((prev) => prev.filter((emp) => emp.id !== id));
       alert("Employee deleted successfully");
-      } catch (error) {
+    } catch (error) {
       console.error("Error deleting employee:", error);
-      alert("Something went wrong while deleting the employee");}
-    
+      alert("Something went wrong while deleting the employee");
+    }
+  };
 
   return (
     <>
@@ -55,17 +58,26 @@ export default function Employee() {
           </p>
         </div>
 
-        <Button onClick={() => {setModelForm(true); setEditEmployee(null);}
-        } icon={<FaPlus />} type="button">
+        <Button
+          onClick={() => {
+            setModelForm(true);
+            setEditEmployee(null);  // Just open form, no deletion
+          }}
+          icon={<FaPlus />}
+          type="button"
+        >
           Add Employee
         </Button>
       </div>
 
       <SearchSelect />
-      <EmployeeCard employees={employees}
-      setEditEmployee={setEditEmployee}
-      setModelForm={setModelForm}
-      handleDelete={handleDelete}/>
+
+      <EmployeeCard
+        employees={employees}
+        setEditEmployee={setEditEmployee}
+        setModelForm={setModelForm}
+        handleDelete={handleDelete}
+      />
 
       {modelForm && (
         <div className="fixed inset-0 bg-transparent bg-opacity-10 backdrop-brightness-30 flex items-center justify-center">
@@ -76,15 +88,15 @@ export default function Employee() {
             >
               ✕
             </Button>
-            <EmployeeForm 
-            setEmployees={setEmployees}
-            setModelForm={setModelForm}
-            editEmployee={editEmployee}
-            setEditEmployee={setEditEmployee}
-             />
+            <EmployeeForm
+              setEmployees={setEmployees}
+              setModelForm={setModelForm}
+              editEmployee={editEmployee}
+              setEditEmployee={setEditEmployee}
+            />
           </div>
         </div>
       )}
     </>
   );
-}}
+}

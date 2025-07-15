@@ -7,7 +7,7 @@ function Dashboard() {
   return (
     <>
       <h1 className="text-2xl font-bold  text-gray-950">Dashboard Overview</h1>
-      <div className ="flex items-center justify-between">
+      <div className ="flex items-center justify-between hrms/src/assets/pexels-mikhail-nilov-6893376.jpg ">
         {stats.map((item, index)=>{
           return (
             <Statcard

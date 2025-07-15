@@ -1,11 +1,7 @@
 import { FaUser, FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import React from "react";
-import { employee } from "../Employee/employees"; // Assuming employee.js exports the employee data as a named export
 
-
-
-export default function EmployeeCard({ employees, setEditEmployee, setModelForm, editemployee, handleDelete }) {
-
+export default function EmployeeCard({ employees, setEditEmployee, setModelForm, handleDelete }) {
   return (
     <div className="mt-5">
       <table className="w-full text-sm text-center text-gray-700">
@@ -42,13 +38,16 @@ export default function EmployeeCard({ employees, setEditEmployee, setModelForm,
               <td className="flex justify-center gap-3 text-gray-600">
                 <FaEye className="cursor-pointer hover:text-blue-500" />
                 <FaEdit 
-                onClick={() => {
-                  setEditEmployee(employee);
-                  setModelForm(true);
-                  handleDelete(employee.id);
-                }} 
-                className="cursor-pointer hover:text-green-500" />
-                <FaTrash className="cursor-pointer hover:text-red-500" />
+                  onClick={() => {
+                    setEditEmployee(employee);
+                    setModelForm(true);
+                  }} 
+                  className="cursor-pointer hover:text-green-500" 
+                />
+                <FaTrash 
+                  onClick={() => handleDelete(employee.id)} 
+                  className="cursor-pointer hover:text-red-500" 
+                />
               </td>
             </tr>
           ))}
